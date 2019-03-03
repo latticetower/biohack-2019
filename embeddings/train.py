@@ -22,11 +22,9 @@ def to_np(x):
 
 def to_var(x):
     if torch.cuda.is_available():
-        x = x.cuda()
+        x = x.to(torch.device("cuda:2"))
     return Variable(x)
     
-    
-#assert os.getenv('CUDA_VISIBLE_DEVICES')
 
 parser = argparse.ArgumentParser()
 find_action = type('', (argparse.Action, ), 
@@ -35,11 +33,9 @@ find_action = type('', (argparse.Action, ),
 parser.add_argument('--dataset', 
         choices=dict(
            basic_dataset=dataloader.GeneExpressionBasicDataset,
-        #cub2011 = cub2011.CUB2011MetricLearning, 
-        #cars196 = cars196.Cars196MetricLearning, 
-        #stanford_online_products = stanford_online_products.StanfordOnlineProducts
+           feature_dataset=dataloader.GeneExpressionFeatureDataset
         ), 
-        default = dataloader.GeneExpressionBasicDataset, 
+        default = dataloader.GeneExpressionFeatureDataset, 
     action=find_action)
 parser.add_argument("--expression_file",
     default="../../biohack-2019/mouse_matrix.h5"
@@ -50,12 +46,12 @@ parser.add_argument("--gene_file",
 
 parser.add_argument('--data', default = 'data')
 parser.add_argument('--savepath', default='saves')
-parser.add_argument('--log', default = 'data/log.txt')
+parser.add_argument('--log', default = '../data/log.txt')
 parser.add_argument('--seed', default = 1, type = int)
 parser.add_argument('--threads', default = 16, type = int)
-parser.add_argument('--epochs', default = 100, type = int)
+parser.add_argument('--epochs', default = 20, type = int)
 parser.add_argument('--batch', default = 128, type = int)
-parser.add_argument('--nbatches', default = 10, type = int)
+parser.add_argument('--nbatches', default = 1000, type = int)
 
 opts = parser.parse_args()
 if not os.path.exists(opts.savepath):
@@ -67,15 +63,19 @@ val_ds = opts.dataset(opts.expression_file, gene_file=opts.gene_file, train=Fals
 
 
 #print(next(get_train_batch(train_ds)))
-model = BasicModel(len(train_ds.gene_ids), 1)
+model = BasicModel(len(train_ds.gene_ids), train_ds.nfeatures())
 if torch.cuda.is_available():
-    model.cuda()
+    model.cuda(device=torch.device('cuda:2'))
 #model.cuda()
 optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate, betas=betas)
-
+with open(opts.log, 'w') as f:
+    f.write("\n")
 
 for epoch in range(opts.epochs):
     print("Epoch %s" % epoch)
+    with open(opts.log, 'a') as f:
+            f.write("Epoch%s "%epoch )
+            f.write("\n")
     for i, (expressions, features, labels) in enumerate(
             get_train_batch(train_ds, pos_size=opts.batch//2, 
                 neg_size=opts.batch//2, nbatches=10)):
@@ -87,9 +87,15 @@ for epoch in range(opts.epochs):
         out = model.forward(e, f)
         loss = nn.MSELoss()(out, l)
         loss.backward()
-        print(to_np(loss))
+        l = to_np(loss)
+        print(l)
+        with open(opts.log, 'a') as f:
+            f.write("%2.6d"%l )
+            f.write("\n")
         optimizer.step()
     
     path = os.path.join(opts.savepath, "emb_epoch_%s.model" % (epoch))
     
     torch.save(model.state_dict(), path)
+    
+    
