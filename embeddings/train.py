@@ -49,7 +49,7 @@ parser.add_argument('--savepath', default='saves')
 parser.add_argument('--log', default = '../data/log.txt')
 parser.add_argument('--seed', default = 1, type = int)
 parser.add_argument('--threads', default = 16, type = int)
-parser.add_argument('--epochs', default = 20, type = int)
+parser.add_argument('--epochs', default = 200, type = int)
 parser.add_argument('--batch', default = 128, type = int)
 parser.add_argument('--nbatches', default = 1000, type = int)
 
@@ -78,7 +78,7 @@ for epoch in range(opts.epochs):
             f.write("\n")
     for i, (expressions, features, labels) in enumerate(
             get_train_batch(train_ds, pos_size=opts.batch//2, 
-                neg_size=opts.batch//2, nbatches=10)):
+                neg_size=opts.batch//2, nbatches=opts.nbatches)):
         optimizer.zero_grad()
 
         e = to_var(torch.from_numpy(expressions).float())
