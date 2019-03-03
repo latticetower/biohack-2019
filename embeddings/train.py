@@ -22,7 +22,7 @@ def to_np(x):
 
 def to_var(x):
     if torch.cuda.is_available():
-        x = x.to(torch.device('cuda:0'))
+        x = x.cuda()
     return Variable(x)
     
     
@@ -68,6 +68,8 @@ val_ds = opts.dataset(opts.expression_file, gene_file=opts.gene_file, train=Fals
 
 #print(next(get_train_batch(train_ds)))
 model = BasicModel(len(train_ds.gene_ids), 1)
+if torch.cuda.is_available():
+    model.cuda()
 #model.cuda()
 optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate, betas=betas)
 
