@@ -22,7 +22,7 @@ def to_np(x):
 
 def to_var(x):
     if torch.cuda.is_available():
-        x = x.cuda()
+        x = x.to(torch.device('cuda:0'))
     return Variable(x)
     
     
@@ -56,6 +56,7 @@ parser.add_argument('--threads', default = 16, type = int)
 parser.add_argument('--epochs', default = 100, type = int)
 parser.add_argument('--batch', default = 128, type = int)
 parser.add_argument('--nbatches', default = 10, type = int)
+
 opts = parser.parse_args()
 if not os.path.exists(opts.savepath):
     os.makedirs(opts.savepath)
