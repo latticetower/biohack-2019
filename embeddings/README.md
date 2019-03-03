@@ -1,0 +1,2 @@
+This folder is planned to contain a collection of models for metric learning.
+We want to use our dataset (which is defined as some set of features and gene expression for some set of genes) to build a succinct representations for each individual sample, to make them searchable by gene expression profile or by set of features.
