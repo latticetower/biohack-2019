@@ -44,5 +44,6 @@ The repo has the following structure:
 - [@latticetower](https://github.com/latticetower)
 - [@ALioznova](https://github.com/ALioznova)
 - [@Mikhail-Sosnin](https://github.com/Mikhail-Sosnin)
+- [@mmurashko](https://github.com/mmurashko)
 
 
