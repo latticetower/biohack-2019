@@ -18,12 +18,12 @@ We were given the following data sources:
 
 The tasks we were given included the following:
 
-[ ] 1) the preparation of various annotated datasets with different levels of difficulty;
-[ ] 2) the creation of binary classifiers for gender, tissue, experiment protocol, etc.;
-[ ] 3) the creation of multi-label classifiers for corresponding papers MeSH terms, author's keywords, keywords, extracted from paper text or abstract, etc.
-[ ] 4) the analysis of false-positive predictions of keywords (they might appear due to errors in data annotation);
-[ ] 5) the validation of our classifiers' predictions with the help of Gene Ontology analysis tools;
-[ ] 6) to make other things, i.e., to build joint embedding representations for keywords and gene expression profiles, to make the profiles searchable by combination of keywords of different kinds
+- [ ] 1) the preparation of various annotated datasets with different levels of difficulty;
+- [ ] 2) the creation of binary classifiers for gender, tissue, experiment protocol, etc.;
+- [ ] 3) the creation of multi-label classifiers for corresponding papers MeSH terms, author's keywords, keywords, extracted from paper text or abstract, etc.
+- [ ] 4) the analysis of false-positive predictions of keywords (they might appear due to errors in data annotation);
+- [ ] 5) the validation of our classifiers' predictions with the help of Gene Ontology analysis tools;
+- [ ] 6) to make other things, i.e., to build joint embedding representations for keywords and gene expression profiles, to make the profiles searchable by combination of keywords of different kinds
 
 ## THE PROBLEM
 
