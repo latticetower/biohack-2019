@@ -45,5 +45,6 @@ The repo has the following structure:
 - [@ALioznova](https://github.com/ALioznova)
 - [@Mikhail-Sosnin](https://github.com/Mikhail-Sosnin)
 - [@mmurashko](https://github.com/mmurashko)
+- [@Nasuli](https://github.com/Nasuli)
 
 
